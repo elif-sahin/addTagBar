@@ -9,17 +9,21 @@
         display: flex;
         background: transparent;
         border: none;
+
+        font-size: medium;
+        padding-left: 10px;
     }
 
     .dropdown-list{
-        background-color: red;
+        background-color: $white;
         display: flex;
         position: fixed;
-        height: 100px;
-        overflow-y: auto;
-        width: 160px;
-        margin-top: 50px;
+        margin-top: 48px;
+        border-radius: 6px;
         flex-direction: column;
+        max-height: 186px;
+        width: 230px;
+        padding: 3px;
 
         &.open{
             visibility: visible;
@@ -32,7 +36,6 @@
 
         .dropdown-item{
             
-            border-bottom: 1px solid $grey;
             background-color: transparent;
             height: 35px;
             width: 100%;

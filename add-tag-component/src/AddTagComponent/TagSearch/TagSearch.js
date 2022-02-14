@@ -2,7 +2,7 @@ import './tagSearch.scss';
 import React from 'react';
 
 export const TagSearch= ({placeholder, onClickElement, dropdownElements}) =>{
-    const [filteredSearch, setFilteredSearch]=React.useState(dropdownElements);
+    const [filteredSearch, setFilteredSearch]=React.useState(max5Element(dropdownElements));
     const [dropdownOpen, setDropdownOpen]=React.useState(false);
     const [searchVal, setSearchVal]=React.useState("");
 
@@ -15,12 +15,11 @@ export const TagSearch= ({placeholder, onClickElement, dropdownElements}) =>{
     const onSearchInputChange = (e) => {
         const value = e.target.value.toLowerCase().trim();
         setSearchVal(value);
-        setFilteredSearch(filterItems(value));
-        setDropdownOpen(true);
+        setFilteredSearch(max5Element(filterItems(value)));
     };
 
     const renderDropdownElement=filteredSearch.map((elName, index)=>
-    <div key ={index+"_"+elName} className='dropdown-item'
+    <div key ={index} className='dropdown-item'
      onClick={()=> {
         setDropdownOpen(false);
         setSearchVal("");
@@ -30,9 +29,24 @@ export const TagSearch= ({placeholder, onClickElement, dropdownElements}) =>{
         <div className='element-text'>{elName}</div>
     </div>
     );
+
+    function max5Element(arr){
+        if(arr.length >5){
+            return arr.slice(0,5);
+        }
+        return arr;
+    }
+
     return (
         <div className="tag-search-wrapper">
-            <input className='tag-search-input' value={searchVal} placeholder={placeholder} onChange={onSearchInputChange}></input>
+            <input 
+                className='tag-search-input' 
+                value={searchVal} 
+                placeholder={placeholder} 
+                onChange={onSearchInputChange}
+                onFocus={()=>setDropdownOpen(true)}
+            >
+            </input>
             <div className={'dropdown-list ' + (dropdownOpen ? "open" : "closed")}>{renderDropdownElement}</div>
         </div>
   );

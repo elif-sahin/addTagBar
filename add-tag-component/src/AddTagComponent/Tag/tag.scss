@@ -1,15 +1,15 @@
 @import "../../variables.scss";
 
 .tag-wrapper{
-    border-radius: 3px;
+    border-radius: 5px;
     width: fit-content;
-    height: 30px;
     align-items: center;
     padding-left: 10px;
     padding-right: 10px;
-    background-color: blue;
+    background-color: $grey;
     display: flex;
     margin-right: 8px;
+    padding-bottom: 4px;
 
     .remove-tag-button{
         display: flex;
