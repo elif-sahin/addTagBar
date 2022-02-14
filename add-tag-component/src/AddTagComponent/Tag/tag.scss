@@ -1,0 +1,23 @@
+@import "../../variables.scss";
+
+.tag-wrapper{
+    border-radius: 3px;
+    width: fit-content;
+    height: 30px;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: blue;
+    display: flex;
+    margin-right: 8px;
+
+    .remove-tag-button{
+        display: flex;
+        color: $dark-grey;
+    }
+    .tag-text{
+        display: flex;
+        color: $black;
+        margin-right: 8px;
+    }
+}

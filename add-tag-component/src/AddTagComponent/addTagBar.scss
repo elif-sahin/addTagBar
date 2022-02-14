@@ -1,0 +1,16 @@
+@import "../variables.scss";
+
+.add-tag-bar{
+    width: 600px;
+    height: 40px;
+    background-color: $white;
+    border-radius: 3px;
+    display: flex;
+    justify-items: center;
+    align-self: center;
+    align-items: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 12px;
+    padding-right: 12px;
+}

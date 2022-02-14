@@ -1,0 +1,59 @@
+@import "../../variables.scss";
+
+.tag-search-wrapper{
+    width: 160px;
+    height: 40px;
+    display: flex;
+
+    .tag-search-input{
+        display: flex;
+        background: transparent;
+        border: none;
+    }
+
+    .dropdown-list{
+        background-color: red;
+        display: flex;
+        position: fixed;
+        height: 100px;
+        overflow-y: auto;
+        width: 160px;
+        margin-top: 50px;
+        flex-direction: column;
+
+        &.open{
+            visibility: visible;
+        }
+        &.closed{
+            visibility: hidden;
+        }
+
+        
+
+        .dropdown-item{
+            
+            border-bottom: 1px solid $grey;
+            background-color: transparent;
+            height: 35px;
+            width: 100%;
+            display: flex;
+            
+        }
+
+        .element-text{
+            color: $black;
+            height: inherit;
+            width: 100%;
+            padding-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    textarea:focus, input:focus{
+        outline: none;
+    }
+    *:focus {
+        outline: none;
+    }
+}
