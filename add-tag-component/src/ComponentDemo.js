@@ -1,4 +1,4 @@
-import { AddTagBar } from './AddTagComponent/AddTagBar';
+import { AddTagBar } from './AddTagBar/AddTagBar';
 import { dropdownContent } from './constants/dropdownContent';
 import './componentDemo.scss';
 
@@ -10,7 +10,7 @@ function App() {
     <div className="component-demo">
       <AddTagBar
         className="add-tag-component"
-        maxTagNumber={3} width={600}
+        maxTagNumber={5} width={800}
         tagOptionslist={dropdownContent.people.map((people) => people.name)}
         addTagText="+ Add Tag">
       </AddTagBar>
