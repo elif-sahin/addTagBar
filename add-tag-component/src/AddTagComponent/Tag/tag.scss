@@ -4,20 +4,36 @@
     border-radius: 5px;
     width: fit-content;
     align-items: center;
-    padding-left: 10px;
-    padding-right: 10px;
     background-color: $grey;
     display: flex;
     margin-right: 8px;
-    padding-bottom: 4px;
+    margin-bottom: 4px;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    height: 30px;
 
     .remove-tag-button{
         display: flex;
         color: $dark-grey;
+        padding: 3px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        border-radius: 2px;
+
+        &:hover{
+            background-color: transparentize($color: $dark-grey, $amount: 0.8s);
+        }
+
+        >.remove-tag-button-image{
+            width: 10px;
+        }
     }
     .tag-text{
         display: flex;
         color: $black;
         margin-right: 8px;
+        height: 1.5em;
+        white-space: nowrap;
     }
 }

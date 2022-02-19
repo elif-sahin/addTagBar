@@ -1,17 +1,20 @@
 @import "../../variables.scss";
 
 .tag-search-wrapper{
-    width: 160px;
+    width: 100px;
     height: 40px;
     display: flex;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+    height: 30px;
 
     .tag-search-input{
         display: flex;
         background: transparent;
         border: none;
-
         font-size: medium;
-        padding-left: 10px;
+        padding: 1px 10px;
+        overflow: hidden;
     }
 
     .dropdown-list{
@@ -32,15 +35,15 @@
             visibility: hidden;
         }
 
-        
-
         .dropdown-item{
-            
             background-color: transparent;
             height: 35px;
             width: 100%;
             display: flex;
-            
+
+            &:hover{
+                background-color: $grey;
+            }
         }
 
         .element-text{
@@ -50,6 +53,8 @@
             padding-left: 10px;
             display: flex;
             align-items: center;
+            cursor: pointer;
+            white-space: pre;
         }
     }
 

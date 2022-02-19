@@ -10,10 +10,16 @@ import './tagSearch.scss';
  * 
  * @author elsahin
  */
-export const TagSearch = ({ placeholder, onClickElement, dropdownElements }) => {
-    const [filteredSearch, setFilteredSearch] = React.useState(max5Element(dropdownElements));
+export const TagSearch = ({ placeholder, onClickElement, dropdownElements, maxElementCount }) => {
+    // Add dropdown elements to state in order to avoid unnecessary changes that can effect to elements
+    const [filteredSearch, setFilteredSearch] = React.useState([]);
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     const [searchVal, setSearchVal] = React.useState("");
+
+    // Listen the props
+    React.useEffect(() => {
+        setFilteredSearch([...dropdownElements]);
+    }, [dropdownElements]);
 
     const filterItems = (value) =>
         dropdownElements.filter(
@@ -22,45 +28,75 @@ export const TagSearch = ({ placeholder, onClickElement, dropdownElements }) => 
         );
 
     const onSearchInputChange = (e) => {
-        const value = e.target.value.toLowerCase().trim();
-        setSearchVal(value);
-        setFilteredSearch(max5Element(filterItems(value)));
+        let copyVal = e.target.value.repeat(1);
+        const value = e.target.value.trim().toLowerCase();
+        setSearchVal(copyVal);
+        setFilteredSearch(filterItems(value));
     };
 
-    const renderDropdownElement = filteredSearch.map((elName, index) =>
+    const makeBold = (text, keyword) => {
+        if (keyword != "") {
+            const textOccIndexes = [...text.matchAll(new RegExp(keyword, 'gi'))].map(a => a.index)
+            let ind = 0;
+
+            const bolded = textOccIndexes.map((index) => {
+                let firstPart = text.slice(ind, index);
+                let occPart = text.slice(index, index + keyword.length);
+                ind = index + keyword.length;
+                let lastPart = null;
+
+                if (textOccIndexes[textOccIndexes.length - 1] === index) {
+                    lastPart = text.slice(ind, text.length);
+                }
+
+                return <>
+                    {firstPart}
+                    <b>{occPart}</b>
+                    {lastPart}
+                </>
+            });
+            return <>{bolded}</>;
+
+        }
+        return <>{text}</>;
+    }
+
+    const renderDropdownElement = maxElement(filteredSearch).map((elName, index) =>
         <div key={index} className='dropdown-item'
             onClick={() => {
-                setDropdownOpen(false);
+                closeDropdown();
                 setSearchVal("");
                 onClickElement(elName);
             }
             }>
-            <div className='element-text'>{elName}</div>
+            <div className='element-text'>{makeBold(elName, searchVal)}</div>
         </div>
     );
 
     /*
-    * Dropdown list should contain max 5 elements. 
+    * Dropdown list should contain less than or equal maxElementCount . 
     * Other elements can be reachable by writing couple of letters on the searchbar.
     */
-    function max5Element(arr) {
-        if (arr.length > 5) {
-            return arr.slice(0, 5);
+    function maxElement(arr) {
+        if (arr.length > maxElementCount) {
+            return arr.slice(0, maxElementCount);
         }
         return arr;
     }
 
+    const closeDropdown = () => setDropdownOpen(false);
+    const openDropdown = () => setDropdownOpen(true);
+
     return (
-        <div className="tag-search-wrapper">
+        <div className={"tag-search-wrapper"} tabIndex={0} onFocus={openDropdown} onBlur={closeDropdown} >
             <input
                 className='tag-search-input'
                 value={searchVal}
                 placeholder={placeholder}
                 onChange={onSearchInputChange}
-                onFocus={() => setDropdownOpen(true)}
             >
             </input>
-            <div className={'dropdown-list ' + (dropdownOpen ? "open" : "closed")}>{renderDropdownElement}</div>
+            <div className={'dropdown-list ' + ((dropdownOpen && renderDropdownElement.length > 0) ? "open" : "closed")}>{renderDropdownElement}</div>
         </div>
     );
 }

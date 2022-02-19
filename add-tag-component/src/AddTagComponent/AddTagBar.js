@@ -12,7 +12,7 @@ import './addTagBar.scss';
  * 
  * @author elsahin
  */
-export const AddTagBar = ({ width, tagOptionslist, addTagText }) => {
+export const AddTagBar = ({ width, tagOptionslist, addTagText, maxTagNumber }) => {
   const [taglist, setTagList] = React.useState([]);
 
   const onClickRemoveTag = (tagText) => {
@@ -23,17 +23,25 @@ export const AddTagBar = ({ width, tagOptionslist, addTagText }) => {
     setTagList([...taglist, tagText]);
   }
 
-  const renderTags = taglist.map((tag) => <Tag key={tag} tagText={tag} onClickRemove={onClickRemoveTag}></Tag>);
-  const searchDropdownElements = tagOptionslist.filter((tagOpt) => !taglist.includes(tagOpt));
+  const tagContent = taglist.map((tag, index) => <Tag key={index} tagText={tag} onClickRemove={onClickRemoveTag}></Tag>);
+  const dropdownOptions = tagOptionslist.filter((tagOpt) => !taglist.includes(tagOpt));
 
-  return (
-    <div className="add-tag-bar">
-      {renderTags}
-      <TagSearch
+  const getTagSearchContent = () => {
+    if (dropdownOptions.length > 0 && taglist.length < maxTagNumber) {
+      return <TagSearch
         placeholder={addTagText}
         onClickElement={onClickAddTag}
-        dropdownElements={searchDropdownElements}
+        dropdownElements={dropdownOptions}
+        maxElementCount={5}
       />
+    }
+    return null;
+  }
+
+  return (
+    <div className="add-tag-bar" style={{ width: `${width + "px"}` }}>
+      {tagContent}
+      {getTagSearchContent()}
     </div>
   );
 }

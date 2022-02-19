@@ -8,12 +8,18 @@
     justify-items: center;
     align-self: center;
     align-items: center;
+    align-content: center;
     padding-top: 3px;
-    padding-bottom: 3px;
     padding-left: 8px;
     padding-right: 8px;
-
-    height: fit-content;
-    min-height: 35px;
+    min-height: 40px;
     flex-flow: wrap;
+
+    // For fixing the width of the main content. This will prevent the increasing the width when give paddings.
+    box-sizing: border-box; 
+
+    > .tag-container{
+        display: flex;
+        flex-flow: wrap;
+    }
 }
