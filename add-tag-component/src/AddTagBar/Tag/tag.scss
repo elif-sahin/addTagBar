@@ -11,6 +11,8 @@
     padding: 4px 10px;
     box-sizing: border-box;
     height: 30px;
+    animation-name: fadeIn ;
+    animation-duration: 0.5s;
 
     .remove-tag-button{
         display: flex;
@@ -35,5 +37,15 @@
         margin-right: 8px;
         height: 1.5em;
         white-space: nowrap;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+    
+      to {
+        opacity: 1;
+      }
     }
 }

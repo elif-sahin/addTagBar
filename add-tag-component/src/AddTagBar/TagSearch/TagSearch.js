@@ -7,16 +7,16 @@ import './tagSearch.scss';
  * @param placeholder placeholder for the search area
  * @param dropdownElements element list for search dropdown list
  * @param onClickElement callback function to controlling actions after clicking on a dropdown element.
+ * @param maxElementCount count of max element that shows at dropdown menu
  * 
  * @author elsahin
  */
 export const TagSearch = ({ placeholder, onClickElement, dropdownElements, maxElementCount }) => {
-    // Add dropdown elements to state in order to avoid unnecessary changes that can effect to elements
     const [filteredSearch, setFilteredSearch] = React.useState([]);
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     const [searchVal, setSearchVal] = React.useState("");
 
-    // Listen the props
+    // Listen the dropdownElements props
     React.useEffect(() => {
         setFilteredSearch([...dropdownElements]);
     }, [dropdownElements]);
@@ -34,28 +34,35 @@ export const TagSearch = ({ placeholder, onClickElement, dropdownElements, maxEl
         setFilteredSearch(filterItems(value));
     };
 
+
+    //This function is used for making search keywords bold on the dropdown list.
     const makeBold = (text, keyword) => {
-        if (keyword != "") {
+        if (keyword !== "") {
+            //Index list of occurences in the tag text. (case ignored)
             const textOccIndexes = [...text.matchAll(new RegExp(keyword, 'gi'))].map(a => a.index)
             let ind = 0;
 
-            const bolded = textOccIndexes.map((index) => {
+            const renderOccurancesBoldedText = textOccIndexes.map((index) => {
+                //Text before occurance
                 let firstPart = text.slice(ind, index);
-                let occPart = text.slice(index, index + keyword.length);
+                let occurancePart = text.slice(index, index + keyword.length);
                 ind = index + keyword.length;
+                //Text after all occurances.
                 let lastPart = null;
 
+                //If it is the last occurance, render remained text too.
                 if (textOccIndexes[textOccIndexes.length - 1] === index) {
                     lastPart = text.slice(ind, text.length);
                 }
 
-                return <>
+                return <span key={index}>
                     {firstPart}
-                    <b>{occPart}</b>
+                    <b>{occurancePart}</b>
                     {lastPart}
-                </>
+                </span>
             });
-            return <>{bolded}</>;
+
+            return <>{renderOccurancesBoldedText}</>;
 
         }
         return <>{text}</>;
